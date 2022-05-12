@@ -10,3 +10,4 @@ class Game(models.Model):
     estimated_time_to_play = models.IntegerField()
     age_recommendation = models.IntegerField()
     player = models.ForeignKey("Player", on_delete=models.CASCADE)
+    categories = models.ManyToManyField("Category", through="GameCategory", related_name="games")

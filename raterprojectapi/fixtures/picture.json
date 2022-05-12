@@ -1,0 +1,20 @@
+[
+    {
+        "model": "raterprojectapi.picture",
+        "pk": 1,
+        "fields": {
+            "player": 1,
+            "game": 1,
+            "pictureURL": "https://target.scene7.com/is/image/Target/GUEST_b73e0cff-d90c-4fd5-8741-8e3f90f388fc?wid=800&hei=800&qlt=80&fmt=pjpeg"
+        }
+    },
+    {
+        "model": "raterprojectapi.picture",
+        "pk": 2,
+        "fields": {
+            "player": 1,
+            "game": 2,
+            "pictureURL": "https://upload.wikimedia.org/wikipedia/en/e/e0/Rock_band_cover.jpg"
+        }
+    }
+]

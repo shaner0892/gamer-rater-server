@@ -13,9 +13,29 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+
+
+from raterprojectapi.views.auth import login_user, register_user
+from raterprojectapi.views.category import CategoryView
+from raterprojectapi.views.game import GameView
+from raterprojectapi.views.game_categories import GameCategoryView
+
+router = routers.DefaultRouter(trailing_slash=False)
+# 'games' is the url, GameView is what to display, 'game' is the base name used if an error occurs
+router.register(r'games', GameView, 'game')
+router.register(r'gamecategories', GameCategoryView, 'gamecategory')
+router.register(r'categories', CategoryView, 'category')
+# router.register(r'gamereview', GameReviewView, 'gamereview')
+
+
 
 urlpatterns = [
+    path('register', register_user),
+    path('login', login_user),
     path('admin/', admin.site.urls),
+    path('', include(router.urls)),
 ]

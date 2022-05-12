@@ -1,0 +1,10 @@
+[
+    {
+        "model": "raterprojectapi.player",
+        "pk": 1,
+        "fields": {
+            "bio": "Hi this is a user",
+            "user": 1
+        }
+    }
+]
