@@ -5,9 +5,8 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from raterprojectapi.models import Game
-from raterprojectapi.models import Category
 from raterprojectapi.models.player import Player
-from raterprojectapi.views import game_categories
+from raterprojectapi.models.review import Review
 
 class GameView(ViewSet):
     """Gamer rater game types view"""
@@ -19,6 +18,8 @@ class GameView(ViewSet):
             Response -- JSON serialized game type
         """
         game = Game.objects.get(pk=pk)
+        player = Player.objects.get(user=request.auth.user)
+        game.is_authorized = game.player == player
         serializer = GameSerializer(game)
         return Response(serializer.data)
     
@@ -29,12 +30,6 @@ class GameView(ViewSet):
             Response -- JSON serialized list of game types
         """
         games = Game.objects.all()
-        # for game in games:
-        #     found_categories = Category.objects.filter(gamecategory__game = game)
-        #     categories = []
-        #     for category in found_categories:
-        #         game.categories.append(category.__dict__)
-        #     game.categories = categories
         serializer = GameSerializer(games, many=True)
         return Response(serializer.data)
     
@@ -59,7 +54,7 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = ['id', 'title', 'designer', 'description', 'year_released', 'number_of_players', 
-                'estimated_time_to_play', 'age_recommendation', 'player', 'categories']
+                'estimated_time_to_play', 'age_recommendation', 'player', 'categories', 'reviews', 'is_authorized']
         depth = 1
         
 class CreateGameSerializer(serializers.ModelSerializer):

@@ -5,9 +5,9 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from raterprojectapi.models.player import Player
-from raterprojectapi.models.review import Review
+from raterprojectapi.models.rating import Rating
 
-class GameReviewView(ViewSet):
+class GameRatingView(ViewSet):
     """Gamer rater game types view"""
     
     def retrieve(self, request, pk):
@@ -16,8 +16,8 @@ class GameReviewView(ViewSet):
         Returns:
             Response -- JSON serialized game type
         """
-        review = Review.objects.get(pk=pk)
-        serializer = GameReviewSerializer(review)
+        rating = Rating.objects.get(pk=pk)
+        serializer = GameRatingSerializer(rating)
         return Response(serializer.data)
     
     def list(self, request):
@@ -26,8 +26,8 @@ class GameReviewView(ViewSet):
         Returns:
             Response -- JSON serialized list of game types
         """
-        reviews = Review.objects.all()
-        serializer = GameReviewSerializer(reviews, many=True)
+        ratings = Rating.objects.all()
+        serializer = GameRatingSerializer(ratings, many=True)
         return Response(serializer.data)
     
     def create(self, request):
@@ -37,20 +37,20 @@ class GameReviewView(ViewSet):
             Response -- JSON serialized game instance
         """
         player = Player.objects.get(user=request.auth.user)
-        serializer = CreateGameReviewSerializer(data=request.data)
+        serializer = CreateGameRatingSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(player=player)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-class GameReviewSerializer(serializers.ModelSerializer):
+class GameRatingSerializer(serializers.ModelSerializer):
     """JSON serializer for game types
     """
     class Meta:
-        model = Review
-        fields = ['id', 'player', 'review', 'game']
+        model = Rating
+        fields = ['id', 'player', 'rating', 'game']
         depth = 1
         
-class CreateGameReviewSerializer(serializers.ModelSerializer):
+class CreateGameRatingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Review
-        fields = ['id', 'review', 'game']
+        model = Rating
+        fields = ['id', 'rating', 'game']

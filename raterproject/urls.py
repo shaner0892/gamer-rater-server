@@ -18,18 +18,21 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
 
-
 from raterprojectapi.views.auth import login_user, register_user
 from raterprojectapi.views.category import CategoryView
 from raterprojectapi.views.game import GameView
 from raterprojectapi.views.game_categories import GameCategoryView
+from raterprojectapi.views.gamerating import GameRatingView
+from raterprojectapi.views.gamereview import GameReviewView
+
 
 router = routers.DefaultRouter(trailing_slash=False)
 # 'games' is the url, GameView is what to display, 'game' is the base name used if an error occurs
 router.register(r'games', GameView, 'game')
 router.register(r'gamecategories', GameCategoryView, 'gamecategory')
 router.register(r'categories', CategoryView, 'category')
-# router.register(r'gamereview', GameReviewView, 'gamereview')
+router.register(r'gamereviews', GameReviewView, 'gamereview')
+router.register(r'gameratings', GameRatingView, 'gamerating')
 
 
 
