@@ -35,7 +35,6 @@ class Game(models.Model):
         # If you don't know how to calculate average, Google it.
         average = 0 
         if (len(ratings)):
-        # Do you need to add an if statement so that if there are no reviews it doesn't execute
             average = total_rating/len(ratings)
         #return the result
         return average

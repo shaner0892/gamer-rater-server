@@ -36,6 +36,7 @@ class GameRatingView(ViewSet):
         Returns
             Response -- JSON serialized game instance
         """
+        # can add an if statement to check if user has already rated, if so invoke an update 
         player = Player.objects.get(user=request.auth.user)
         serializer = CreateGameRatingSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
